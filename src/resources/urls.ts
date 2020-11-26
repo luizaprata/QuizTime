@@ -1,7 +1,7 @@
 const URLS = {
-  HOME_SUMMARY: {
+  HOME: {
     GET_ALL_CATEGORIES: 'api_category.php',
   },
-}
+};
 
-export default URLS
+export default URLS;

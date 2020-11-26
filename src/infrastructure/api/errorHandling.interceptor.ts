@@ -1,8 +1,7 @@
-import axios, {AxiosError} from 'axios';
+import {AxiosError} from 'axios';
 import {ApiServerError} from './apiErrors/ApiServerError';
 import {ApiValidationError} from './apiErrors/ApiValidationError';
 import {ApiUnknowError} from './apiErrors/ApiUnknowError';
-import {CancelError} from './apiErrors/CancelError';
 
 type ApiErrorResponse = {
   title: string;
@@ -17,10 +16,6 @@ const defaultErrorValue: ApiErrorResponse = {
 export default function errorHandlingInterceptor(
   error: AxiosError<ApiErrorResponse>,
 ) {
-  if (axios.isCancel(error)) {
-    return Promise.reject(new CancelError());
-  }
-
   const code = Number(error?.response?.status) || 0;
   if (code >= 500) {
     return Promise.reject(new ApiServerError(error));
