@@ -1,8 +1,5 @@
 # Setup de Ambiente
 
-Serão apresentadas aqui informações úteis para contribuir para o desenvolvimento
-do aplicativo Localiza ZARP
-
 ## Android
 
 **Pré-requisitos:**
@@ -36,7 +33,7 @@ Mac:
 
 ```sh
 brew install watchman
-brew cask install adoptopenjdk/openjdk/adoptopenjdk10
+brew cask install adoptopenjdk/openjdk/adoptopenjdk8
 ```
 
 Após a instalação o Android Studio, ele solicitará que se complete a instalação da ferramenta:
@@ -148,28 +145,7 @@ Com as ferramentas instaladas vá até a raiz do projeto onde está o arquivo `p
 
 Quando o download estiver concluído você terá uma pasta com o nome _node_modules_ no mesmo local que está o arquivo `package.json` com todas as dependências do projeto instaladas.
 
-**Testar o Ambiente:**
-
-Com as configurações acima instaladas você precisa selecionar nas seguintes plataformas as configurações de dev, para evitar que dados utilizados durante o desenvolvimento caia em ambiente de produção:
-
-- **Android** - Você deve selecionar a build vairant `developmentDebug` no android studio
-![Build Variants](./imagens/build-variants.png)
-- **iOS** - Você deve selecionar o scheme `zarpDev` no Xcode
-![Scheme iOS](./imagens/schemes-ios.png)
-
-- Verificar se o react-native está instalado e configurado da forma correta:
-
-  ```sh
-  yarn android
-  ```
-
-  ou
-
-  ```sh
-  yarn ios
-  ```
-
-Com esse comando será aberto o emulator/simulador, compilada e executada a aplicação para a respectiva plataforma em modo de desenvolvimento.
+**Falha ao carregar o bundle:**
 
 Caso tenha problemas para carregar o _bundle_ no dispositivo (**Android**), execute o seguinte comando:
 
@@ -183,10 +159,3 @@ Copie o nome do dispositivo e substitua no comando abaixo.
 adb -s <emulator/device name> reverse tcp:8081 tcp:8081
 ```
 
-**Release em múltiplos ambientes**
-
-Nosso app gerencia múltiplos ambientes com a lib `react-native-dotenv`, por padrão as varáveis do ambiente são carregadas do arquivo `.env`, no momento de fazer release, usar o seguinte comando para alterar os valores para o ambiente desejado:
-
-```sh
-yarn setEnv <development | homolog | production>
-```
