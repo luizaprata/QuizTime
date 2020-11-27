@@ -1,56 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`HomeScreen.styles THEN CardsContainer SHOULD match with snapshot 1`] = `
-<View
-  collapsable={true}
-  pointerEvents="box-none"
-  style={
-    Object {
-      "flex": 1,
-    }
-  }
->
-  <View
-    style={
-      Array [
-        Object {
-          "flexDirection": "row",
-        },
-      ]
-    }
-  />
-</View>
-`;
-
-exports[`HomeScreen.styles THEN CardsScrollContainer SHOULD match with snapshot 1`] = `
-<View
-  collapsable={true}
-  pointerEvents="box-none"
-  style={
-    Object {
-      "flex": 1,
-    }
-  }
->
-  <View
-    style={
-      Array [
-        Object {
-          "flexBasis": 0,
-          "flexGrow": 1,
-          "flexShrink": 1,
-          "overflow": "visible",
-          "paddingBottom": 0,
-          "paddingLeft": 0,
-          "paddingRight": 0,
-          "paddingTop": 16,
-        },
-      ]
-    }
-  />
-</View>
-`;
-
 exports[`HomeScreen.styles THEN Container SHOULD match with snapshot 1`] = `
 <View
   collapsable={true}
@@ -78,59 +27,5 @@ exports[`HomeScreen.styles THEN Container SHOULD match with snapshot 1`] = `
       ]
     }
   />
-</View>
-`;
-
-exports[`HomeScreen.styles THEN ErrorMessageContainer SHOULD match with snapshot 1`] = `
-<View
-  collapsable={true}
-  pointerEvents="box-none"
-  style={
-    Object {
-      "flex": 1,
-    }
-  }
->
-  <View
-    style={
-      Array [
-        Object {
-          "flexBasis": 0,
-          "flexGrow": 1,
-          "flexShrink": 1,
-        },
-      ]
-    }
-  />
-</View>
-`;
-
-exports[`HomeScreen.styles THEN RefreshContainer SHOULD match with snapshot 1`] = `
-<View
-  collapsable={true}
-  pointerEvents="box-none"
-  style={
-    Object {
-      "flex": 1,
-    }
-  }
->
-  <RCTScrollView
-    contentContainerStyle={
-      Object {
-        "alignItems": "center",
-        "flex": 1,
-        "justifyContent": "space-between",
-        "padding": 0,
-      }
-    }
-    style={
-      Array [
-        Object {},
-      ]
-    }
-  >
-    <View />
-  </RCTScrollView>
 </View>
 `;

@@ -1,12 +1,12 @@
 import React from 'react';
-import {render, RenderResult, act} from '@testing-library/react-native';
+import {render, act, RenderAPI} from '@testing-library/react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import MainNavigation, {AppNavigator} from './MainNavigation';
 import {AppScreensEnum} from '@/types/AppScreensEnum';
 import HomeScreen from '@/modules/home/HomeScreen/HomeScreen';
 
 describe('MainNavigation', () => {
-  let component: RenderResult;
+  let component: RenderAPI;
 
   beforeEach(() => {
     jest.useFakeTimers();

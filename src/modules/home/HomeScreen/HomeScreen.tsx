@@ -1,31 +1,42 @@
-import {  StatusBar } from 'react-native'
-import React, { useCallback, useEffect, useState } from 'react'
-import { useNavigation } from '@react-navigation/native'
-import {
-  Container,
-} from './HomeScreen.styles'
-import colors from '@/resources/colors'
-import useHomeSummaryApi from './useHomeSummaryApi'
+import React from 'react';
+import {useNavigation} from '@react-navigation/native';
+import {ButtonContainer} from './HomeScreen.styles';
+import useAllCategoriesApi from './useAllCategoriesApi';
+import {Button, Text} from 'react-native';
+import {Category} from './types/Trivia.types';
+import {Container} from '@/components/Container/Container.styles';
 
 const HomeScreen: React.FC = () => {
-  const navigation = useNavigation()
+  //const navigation = useNavigation();
 
-  const {
-    payload,
-    isLoading,
-    errorMessage,
-    fetchData,
-  } = useHomeSummaryApi()
+  const {payload, isLoading, errorMessage} = useAllCategoriesApi();
 
+  const onCategorySelected = (category: Category) => {
+    console.log(category);
+    //navigation.navigate();
+  };
+
+  if (errorMessage) {
+    return null;
+  }
   return (
+    <Container>
+      {isLoading && <Text>Carregando</Text>}
+      {!isLoading && (
+        <ButtonContainer>
+          {payload?.trivia_categories?.map((category) => {
+            return (
+              <Button
+                key={category.id}
+                title={category.name}
+                onPress={() => onCategorySelected(category)}
+              />
+            );
+          })}
+        </ButtonContainer>
+      )}
+    </Container>
+  );
+};
 
-        <Container>
-          <StatusBar
-            barStyle="dark-content"
-            backgroundColor={colors.chumbo200}
-          />
-                  </Container>
-  )
-}
-
-export default HomeScreen
+export default HomeScreen;

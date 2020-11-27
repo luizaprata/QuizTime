@@ -1,5 +1,5 @@
 const URLS = {
-  HOME: {
+  TRIVIA: {
     GET_ALL_CATEGORIES: 'api_category.php',
   },
 };

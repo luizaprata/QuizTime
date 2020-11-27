@@ -44,22 +44,4 @@ describe('errorHandling Interceptor', () => {
     expect(result.detail).toBe('baz');
     expect(result.title).toBe('foo');
   });
-
-  test('SHOULD create a gateway  error WHEN 424 ', async () => {
-    let result = null;
-    try {
-      await errorHandlingInterceptor({
-        response: {
-          status: 424,
-          data: {title: 'foo', detail: 'baz'},
-        },
-      });
-    } catch (ex) {
-      result = ex;
-    }
-
-    expect(result).toBeInstanceOf(ApiGatewayError);
-    expect(result.detail).toBe('baz');
-    expect(result.title).toBe('foo');
-  });
 });
