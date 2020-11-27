@@ -4,11 +4,12 @@ import {
   DifficultyEnum,
   QuestionTypeEnum,
 } from '@/types/Trivia.types';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import useQuestionByCategoryApi from './useQuestionByCategoryApi';
 import { useRoute } from '@react-navigation/native';
 import { Text, View } from 'react-native';
 import MultipleQuestionsList from './MultipleQuestionsList/MultipleQuestionsList';
+import tryChangeDifficulty, { Difficulty } from './try-change-difficulty-level';
 
 const MAX_AMOUNT_QUESTION = 1;
 const QUESTION_TYPE = QuestionTypeEnum.multiple;
@@ -20,6 +21,12 @@ const QuizByCategoryScreen: React.FC = () => {
     category: Category;
   };
 
+  const [difficulty, setDifficulty] = useState<Difficulty>({
+    current: DifficultyEnum.easy,
+    hitsCount: 0,
+  });
+  const [hitCount, setHitCount] = useState(0);
+
   const {
     payload,
     isLoading,
@@ -29,8 +36,12 @@ const QuizByCategoryScreen: React.FC = () => {
     MAX_AMOUNT_QUESTION,
     QUESTION_TYPE,
     category.id,
-    DifficultyEnum.easy,
+    difficulty.current,
   );
+
+  useEffect(() => {
+    setDifficulty((prv) => tryChangeDifficulty(prv, hitCount));
+  }, [hitCount]);
 
   useEffect(() => {
     fetchData();
@@ -38,6 +49,7 @@ const QuizByCategoryScreen: React.FC = () => {
   }, [fetchData]);
 
   const onHandleAnswer = (isCorrect: boolean) => {
+    setHitCount((prv) => prv + (isCorrect ? 1 : -1));
     if (isCorrect) {
       fetchData();
     }
