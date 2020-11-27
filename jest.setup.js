@@ -10,8 +10,10 @@ jest.mock('react-native/Libraries/Animated/src/NativeAnimatedHelper');
 jest.mock('react-native-screens/native-stack', () => ({
   createNativeStackNavigator: jest
     .fn()
-    .mockReturnValue({Navigator: '', Screen: ''}),
+    .mockReturnValue({ Navigator: '', Screen: '' }),
 }));
 jest.mock('@react-navigation/stack', () => ({
-  createStackNavigator: jest.fn().mockReturnValue({Navigator: '', Screen: ''}),
+  createStackNavigator: jest
+    .fn()
+    .mockReturnValue({ Navigator: '', Screen: '' }),
 }));

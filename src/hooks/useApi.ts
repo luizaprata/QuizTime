@@ -1,7 +1,7 @@
-import {api} from '@/infrastructure/api';
-import {ApiError} from '@/infrastructure/api/apiErrors/ApiError';
-import {AxiosRequestConfig} from 'axios';
-import {useCallback, useState} from 'react';
+import { api } from '@/infrastructure/api';
+import { ApiError } from '@/infrastructure/api/apiErrors/ApiError';
+import { AxiosRequestConfig } from 'axios';
+import { useCallback, useState } from 'react';
 
 type ApiMethod = 'get' | 'post' | 'delete' | 'put';
 
@@ -34,7 +34,7 @@ export default function useApi<TResult>(
     async (body: unknown = null) => {
       try {
         setIsLoading(true);
-        const {data} = await _fetch(body);
+        const { data } = await _fetch(body);
         setPayload(data);
         setIsLoading(false);
         setErrorMessage(null);

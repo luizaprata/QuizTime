@@ -1,7 +1,7 @@
 import useApi from '@/hooks/useApi';
 import URLS from '@/resources/urls';
-import {useEffect} from 'react';
-import {CategoriesResponse} from './types/Trivia.types';
+import { CategoriesResponse } from '@/types/Trivia.types';
+import { useEffect } from 'react';
 
 export default function useAllCategoriesApi() {
   const {
@@ -16,5 +16,5 @@ export default function useAllCategoriesApi() {
     void fetchData();
   }, [fetchData]);
 
-  return {payload, isLoading, errorMessage, clearErrorMessage};
+  return { payload, isLoading, errorMessage, clearErrorMessage };
 }

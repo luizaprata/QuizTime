@@ -2,30 +2,16 @@
 
 exports[`HomeScreen.styles THEN Container SHOULD match with snapshot 1`] = `
 <View
-  collapsable={true}
-  pointerEvents="box-none"
   style={
-    Object {
-      "flex": 1,
-    }
+    Array [
+      Object {
+        "backgroundColor": "#F4F4F4",
+        "paddingBottom": 50,
+        "paddingLeft": 50,
+        "paddingRight": 50,
+        "paddingTop": 50,
+      },
+    ]
   }
->
-  <SafeAreaView
-    style={
-      Array [
-        Object {
-          "alignItems": "center",
-          "flexBasis": 0,
-          "flexGrow": 1,
-          "flexShrink": 1,
-          "justifyContent": "space-between",
-          "paddingBottom": 0,
-          "paddingLeft": 0,
-          "paddingRight": 0,
-          "paddingTop": 0,
-        },
-      ]
-    }
-  />
-</View>
+/>
 `;

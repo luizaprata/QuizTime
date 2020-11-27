@@ -1,8 +1,8 @@
 import React from 'react';
-import {render, act, RenderAPI} from '@testing-library/react-native';
-import {NavigationContainer} from '@react-navigation/native';
-import MainNavigation, {AppNavigator} from './MainNavigation';
-import {AppScreensEnum} from '@/types/AppScreensEnum';
+import { render, act, RenderAPI } from '@testing-library/react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import MainNavigation, { AppNavigator } from './MainNavigation';
+import { AppScreensEnum } from '@/types/AppScreensEnum';
 import HomeScreen from '@/modules/home/HomeScreen/HomeScreen';
 
 describe('MainNavigation', () => {
