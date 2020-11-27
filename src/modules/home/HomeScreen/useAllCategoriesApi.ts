@@ -1,7 +1,7 @@
 import useApi from '@/hooks/useApi';
 import URLS from '@/resources/urls';
+import { CategoriesResponse } from '@/types/Trivia.types';
 import { useEffect } from 'react';
-import { CategoriesResponse } from './types/Trivia.types';
 
 export default function useAllCategoriesApi() {
   const {
