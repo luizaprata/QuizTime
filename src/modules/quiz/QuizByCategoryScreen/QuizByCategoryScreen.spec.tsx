@@ -1,8 +1,8 @@
 import React from 'react';
 import { render, RenderAPI } from '@testing-library/react-native';
-import HomeScreen from './';
+import QuizByCategoryScreen from '.';
 import { useNavigation } from '@react-navigation/native';
-import useAllCategoriesApi from './useAllCategoriesApi';
+import useQuestionByCategoryApi from './useQuestionByCategoryApi';
 
 jest.mock('@react-navigation/native', () => {
   const navigate = jest.fn();
@@ -11,11 +11,13 @@ jest.mock('@react-navigation/native', () => {
   });
 
   return {
+    useRoute: jest.fn().mockReturnValue({ params: { category: { id: 1 } } }),
     useNavigation: useNavigationMock,
+    setOptions: jest.fn(),
   };
 });
 
-jest.mock('./useAllCategoriesApi', () => {
+jest.mock('./useQuestionByCategoryApi', () => {
   let result = { isLoading: false, payload: [] };
 
   const mock = () => result;
@@ -23,7 +25,7 @@ jest.mock('./useAllCategoriesApi', () => {
   return mock;
 });
 
-describe('HomeScreen', () => {
+describe('QuizByCategoryScreen', () => {
   let component: RenderAPI;
   let navigation;
 
@@ -34,41 +36,26 @@ describe('HomeScreen', () => {
   });
 
   describe('Rendering', () => {
-    test('SHOULD render Category buttons when payload is fetched from API', () => {
-      useAllCategoriesApi.setResult({
-        payload: {
-          trivia_categories: [
-            { id: 1, name: 'category1' },
-            { id: 2, name: 'category2' },
-          ],
-        },
-        isLoading: false,
-        errorMessage: null,
-      });
-      component = render(<HomeScreen />);
-
-      expect(component.getByText('category1')).toBeDefined();
-      expect(component.getByText('category2')).toBeDefined();
-    });
-
     test('SHOULD render error when errorMessage occurs from API', () => {
-      useAllCategoriesApi.setResult({
+      useQuestionByCategoryApi.setResult({
         payload: null,
         isLoading: false,
         errorMessage: 'Ocorreu um erro',
+        fetchData: jest.fn(),
       });
-      component = render(<HomeScreen />);
+      component = render(<QuizByCategoryScreen />);
 
       expect(component.getByText('Ocorreu um erro')).toBeDefined();
     });
 
     test('SHOULD render loading message when is loading the API', () => {
-      useAllCategoriesApi.setResult({
+      useQuestionByCategoryApi.setResult({
         payload: null,
         isLoading: true,
         errorMessage: null,
+        fetchData: jest.fn(),
       });
-      component = render(<HomeScreen />);
+      component = render(<QuizByCategoryScreen />);
 
       expect(component.getByText('Carregando')).toBeDefined();
     });

@@ -44,7 +44,7 @@ const QuizByCategoryScreen: React.FC = () => {
   };
 
   if (errorMessage) {
-    return null;
+    return <Text>{errorMessage}</Text>;
   }
   return (
     <ScreenArea>

@@ -1,10 +1,10 @@
 import React from 'react';
-import { render } from '@testing-library/react-native';
-import { Container } from './HomeScreen.styles';
+import renderer from 'react-test-renderer';
+import { ButtonContainer } from './HomeScreen.styles';
 
 describe('HomeScreen.styles', () => {
   test('THEN Container SHOULD match with snapshot', () => {
-    const container = render(<Container />).asJSON();
-    expect(container).toMatchSnapshot();
+    const tree = renderer.create(<ButtonContainer />).toJSON();
+    expect(tree).toMatchSnapshot();
   });
 });

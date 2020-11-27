@@ -19,7 +19,7 @@ const HomeScreen: React.FC = () => {
   };
 
   if (errorMessage) {
-    return null;
+    return <Text>{errorMessage}</Text>;
   }
   return (
     <ScreenArea>
