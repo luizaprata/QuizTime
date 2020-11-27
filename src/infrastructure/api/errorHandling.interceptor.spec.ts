@@ -1,14 +1,14 @@
-import {ApiGatewayError} from './apiErrors/ApiGatewayError';
-import {ApiServerError} from './apiErrors/ApiServerError';
-import {ApiUnknowError} from './apiErrors/ApiUnknowError';
-import {ApiValidationError} from './apiErrors/ApiValidationError';
+import { ApiGatewayError } from './apiErrors/ApiGatewayError';
+import { ApiServerError } from './apiErrors/ApiServerError';
+import { ApiUnknowError } from './apiErrors/ApiUnknowError';
+import { ApiValidationError } from './apiErrors/ApiValidationError';
 import errorHandlingInterceptor from './errorHandling.interceptor';
 
 describe('errorHandling Interceptor', () => {
   test('SHOULD create a internal server error WHEN 500 ', async () => {
     let result = null;
     try {
-      await errorHandlingInterceptor({response: {status: 500}});
+      await errorHandlingInterceptor({ response: { status: 500 } });
     } catch (ex) {
       result = ex;
     }
@@ -19,7 +19,7 @@ describe('errorHandling Interceptor', () => {
   test('SHOULD create a unknow server error WHEN not status ', async () => {
     let result = null;
     try {
-      await errorHandlingInterceptor({response: {status: 0}});
+      await errorHandlingInterceptor({ response: { status: 0 } });
     } catch (ex) {
       result = ex;
     }
@@ -33,7 +33,7 @@ describe('errorHandling Interceptor', () => {
       await errorHandlingInterceptor({
         response: {
           status: 400,
-          data: {title: 'foo', detail: 'baz'},
+          data: { title: 'foo', detail: 'baz' },
         },
       });
     } catch (ex) {

@@ -1,4 +1,4 @@
-import {api} from './';
+import { api } from './';
 
 describe('Api', () => {
   test('SHOULD return base url', () => {

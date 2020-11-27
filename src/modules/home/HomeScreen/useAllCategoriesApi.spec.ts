@@ -1,5 +1,5 @@
 import useApi from '@/hooks/useApi';
-import {act, renderHook} from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react-hooks';
 import useAllCategoriesApi from './useAllCategoriesApi';
 
 jest.mock('@/hooks/useApi', () => {
@@ -11,12 +11,12 @@ jest.mock('@/hooks/useApi', () => {
     fetchData: jest.fn(),
   };
 
-  let result = {...baseResult};
+  let result = { ...baseResult };
 
   const mock = () => result;
 
   mock.setResult = (_result) => {
-    result = {...baseResult, ..._result};
+    result = { ...baseResult, ..._result };
   };
 
   return mock;
@@ -26,7 +26,7 @@ describe('useAllCategoriesApi', () => {
   test('SHOULD begins requesting', () => {
     const api = useApi();
 
-    const {result} = renderHook(() => useAllCategoriesApi());
+    const { result } = renderHook(() => useAllCategoriesApi());
 
     act(() => {});
 
@@ -34,18 +34,18 @@ describe('useAllCategoriesApi', () => {
   });
 
   test('SHOULD use useApi isLoading', () => {
-    useApi.setResult({isLoading: true});
+    useApi.setResult({ isLoading: true });
 
-    const {result} = renderHook(() => useAllCategoriesApi());
+    const { result } = renderHook(() => useAllCategoriesApi());
 
     expect(result.current.isLoading).toBeTruthy();
   });
 
   test('SHOULD use useApi payload', () => {
     const expected = [];
-    useApi.setResult({payload: expected});
+    useApi.setResult({ payload: expected });
 
-    const {result} = renderHook(() => useAllCategoriesApi());
+    const { result } = renderHook(() => useAllCategoriesApi());
 
     expect(result.current.payload).toBe(expected);
   });

@@ -1,10 +1,10 @@
 import React from 'react';
-import {render, RenderAPI} from '@testing-library/react-native';
+import { render, RenderAPI } from '@testing-library/react-native';
 import HomeScreen from './';
-import {useNavigation} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 jest.mock('./useHomeSummaryApi', () => {
-  let result = {isLoading: false, payload: []};
+  let result = { isLoading: false, payload: [] };
 
   const mock = () => result;
   mock.setResult = (_result) => (result = _result);

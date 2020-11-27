@@ -7,6 +7,6 @@ const colors = {
   chumbo900: '#404040',
   white: '#FFFFFF',
   black: '#000000',
-}
+};
 
-export default colors
+export default colors;
