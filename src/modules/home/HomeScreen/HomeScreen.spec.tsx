@@ -1,5 +1,5 @@
 import React from 'react';
-import {act, fireEvent, render, RenderAPI} from '@testing-library/react-native';
+import {render, RenderAPI} from '@testing-library/react-native';
 import HomeScreen from './';
 import {useNavigation} from '@react-navigation/native';
 
