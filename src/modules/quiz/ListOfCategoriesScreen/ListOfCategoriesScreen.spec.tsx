@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, RenderAPI } from '@testing-library/react-native';
-import HomeScreen from './';
+import ListOfCategoriesScreen from '.';
 import { useNavigation } from '@react-navigation/native';
 import useAllCategoriesApi from './useAllCategoriesApi';
 
@@ -23,7 +23,7 @@ jest.mock('./useAllCategoriesApi', () => {
   return mock;
 });
 
-describe('HomeScreen', () => {
+describe('ListOfCategoriesScreen', () => {
   let component: RenderAPI;
   let navigation;
 
@@ -45,7 +45,7 @@ describe('HomeScreen', () => {
         isLoading: false,
         errorMessage: null,
       });
-      component = render(<HomeScreen />);
+      component = render(<ListOfCategoriesScreen />);
 
       expect(component.getByText('category1')).toBeDefined();
       expect(component.getByText('category2')).toBeDefined();
@@ -57,7 +57,7 @@ describe('HomeScreen', () => {
         isLoading: false,
         errorMessage: 'Ocorreu um erro',
       });
-      component = render(<HomeScreen />);
+      component = render(<ListOfCategoriesScreen />);
 
       expect(component.getByText('Ocorreu um erro')).toBeDefined();
     });
@@ -68,7 +68,7 @@ describe('HomeScreen', () => {
         isLoading: true,
         errorMessage: null,
       });
-      component = render(<HomeScreen />);
+      component = render(<ListOfCategoriesScreen />);
 
       expect(component.getByText('Carregando')).toBeDefined();
     });

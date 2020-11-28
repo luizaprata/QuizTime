@@ -1,13 +1,13 @@
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { ButtonContainer } from './HomeScreen.styles';
+import { ButtonContainer } from './ListOfCategoriesScreen.styles';
 import useAllCategoriesApi from './useAllCategoriesApi';
 import { Button, Text } from 'react-native';
-import { Category } from '@/types/Trivia.types';
+import { Category } from '@/modules/quiz/types/Trivia.types';
 import { ScreenArea, ScrollArea } from '@/components/Screen/Screen.styles';
 import { AppScreensEnum } from '@/types/AppScreensEnum';
 
-const HomeScreen: React.FC = () => {
+const ListOfCategoriesScreen: React.FC = () => {
   const navigation = useNavigation();
 
   const { payload, isLoading, errorMessage } = useAllCategoriesApi();
@@ -43,4 +43,4 @@ const HomeScreen: React.FC = () => {
   );
 };
 
-export default HomeScreen;
+export default ListOfCategoriesScreen;

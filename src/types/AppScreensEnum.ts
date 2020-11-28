@@ -1,4 +1,5 @@
 export enum AppScreensEnum {
-  Home = 'Home',
+  ListOfCategories = 'ListOfCategories',
   QuizByCategory = 'QuizByCategory',
+  ScoreByCategory = 'ScoreByCategory',
 }
