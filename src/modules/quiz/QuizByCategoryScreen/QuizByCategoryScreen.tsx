@@ -4,14 +4,22 @@ import {
   DifficultyEnum,
   QuestionTypeEnum,
 } from '@/types/Trivia.types';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import useQuestionByCategoryApi from './useQuestionByCategoryApi';
 import { useRoute } from '@react-navigation/native';
 import { Text, View } from 'react-native';
 import MultipleQuestionsList from './MultipleQuestionsList/MultipleQuestionsList';
+import tryChangeDifficulty, { QuizStatus } from './try-change-difficulty-level';
 
 const MAX_AMOUNT_QUESTION = 1;
 const QUESTION_TYPE = QuestionTypeEnum.multiple;
+
+type DifficultyScore = { hits: number; errors: number };
+type Score = {
+  [DifficultyEnum.easy]: DifficultyScore;
+  [DifficultyEnum.medium]: DifficultyScore;
+  [DifficultyEnum.hard]: DifficultyScore;
+};
 
 const QuizByCategoryScreen: React.FC = () => {
   const route = useRoute();
@@ -19,6 +27,16 @@ const QuizByCategoryScreen: React.FC = () => {
   const { category } = route.params as {
     category: Category;
   };
+
+  const [quizStatus, setQuizStatus] = useState<QuizStatus>({
+    difficulty: DifficultyEnum.easy,
+    straightPoints: 0,
+  });
+  const [score, setScore] = useState<Score>({
+    [DifficultyEnum.easy]: { hits: 0, errors: 0 },
+    [DifficultyEnum.medium]: { hits: 0, errors: 0 },
+    [DifficultyEnum.hard]: { hits: 0, errors: 0 },
+  });
 
   const {
     payload,
@@ -29,18 +47,25 @@ const QuizByCategoryScreen: React.FC = () => {
     MAX_AMOUNT_QUESTION,
     QUESTION_TYPE,
     category.id,
-    DifficultyEnum.easy,
+    quizStatus.difficulty,
   );
 
   useEffect(() => {
     fetchData();
     return () => {};
-  }, [fetchData]);
+  }, [quizStatus, fetchData]);
 
   const onHandleAnswer = (isCorrect: boolean) => {
-    if (isCorrect) {
-      fetchData();
-    }
+    setQuizStatus((prevQuiz) => {
+      const nextDiff = tryChangeDifficulty(prevQuiz, isCorrect);
+      setScore((prevScore) => {
+        const nextScore = prevScore[nextDiff.difficulty];
+        nextScore.hits += isCorrect ? 1 : 0;
+        nextScore.errors += isCorrect ? 0 : 1;
+        return prevScore;
+      });
+      return nextDiff;
+    });
   };
 
   if (errorMessage) {
@@ -64,6 +89,9 @@ const QuizByCategoryScreen: React.FC = () => {
                 </View>
               );
             })}
+
+            <Text>{JSON.stringify(quizStatus, null, ' ')}</Text>
+            <Text>{JSON.stringify(score, null, ' ')}</Text>
           </>
         )}
       </ScrollArea>
@@ -72,13 +100,3 @@ const QuizByCategoryScreen: React.FC = () => {
 };
 
 export default QuizByCategoryScreen;
-
-// Ao responder a questão, informar ao usuário se ele acertou ou errou. Após isso, mostrar a próxima questão de
-// acordo com a seguinte regra:
-// O grau de dificuldade das questões segue o padrão: fácil, médio e difícil.
-// Caso o usuário acerte 2 seguidas de um mesmo nível, a questão a ser mostrada deve ser de dificuldade
-// superior a da questão atual. A dificuldade não deve ser alterada caso já esteja no nível difícil.
-// Caso o usuário erre 2 seguidas de um mesmo nível, a questão a ser mostrada deve ser de dificuldade
-// inferior a da questão atual. A dificuldade não deve ser alterada caso já esteja no nível fácil.
-// A resposta escolhida, a dificuldade, o gabarito, a data/hora da resposta e o indicativo se ele acertou ou errou a
-// questão devem ser persistidos. A forma como esses dados serão persistidos fica a seu critério.
