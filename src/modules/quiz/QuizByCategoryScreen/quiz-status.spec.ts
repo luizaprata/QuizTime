@@ -1,4 +1,4 @@
-import { DifficultyEnum } from '@/types/Trivia.types';
+import { DifficultyEnum } from '@/modules/quiz/types/Trivia.types';
 import tryChangeDifficulty, { DIFFICULTY_ORDER } from './quiz-status';
 
 describe('try-change-difficulty-level', () => {

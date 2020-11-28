@@ -3,7 +3,7 @@ import {
   Category,
   DifficultyEnum,
   QuestionTypeEnum,
-} from '@/types/Trivia.types';
+} from '@/modules/quiz/types/Trivia.types';
 import React, { useEffect, useState } from 'react';
 import useQuestionByCategoryApi from './useQuestionByCategoryApi';
 import { useRoute } from '@react-navigation/native';

@@ -2,9 +2,10 @@ import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import ListOfCategoriesScreen from '@/modules/quiz/ListOfCategoriesScreen';
 import { AppScreensEnum } from '@/types/AppScreensEnum';
-import QuizByCategoryScreen from './modules/quiz/QuizByCategoryScreen/QuizByCategoryScreen';
+import QuizByCategoryScreen from '@/modules/quiz/QuizByCategoryScreen';
+import ScoreByCategoryScreen from '@/modules/quiz/ScoreByCategoryScreen';
+import ListOfCategoriesScreen from '@/modules/quiz/ListOfCategoriesScreen';
 
 const Stack = createStackNavigator();
 

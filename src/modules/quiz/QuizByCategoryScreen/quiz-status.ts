@@ -1,4 +1,4 @@
-import { DifficultyEnum } from '@/types/Trivia.types';
+import { DifficultyEnum } from '@/modules/quiz/types/Trivia.types';
 
 export type QuizStatus = {
   difficulty: DifficultyEnum;

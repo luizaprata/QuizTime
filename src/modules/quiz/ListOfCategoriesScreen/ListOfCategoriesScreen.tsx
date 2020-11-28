@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import { ButtonContainer } from './ListOfCategoriesScreen.styles';
 import useAllCategoriesApi from './useAllCategoriesApi';
 import { Button, Text } from 'react-native';
-import { Category } from '@/types/Trivia.types';
+import { Category } from '@/modules/quiz/types/Trivia.types';
 import { ScreenArea, ScrollArea } from '@/components/Screen/Screen.styles';
 import { AppScreensEnum } from '@/types/AppScreensEnum';
 

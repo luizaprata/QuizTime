@@ -5,7 +5,7 @@ import {
   DifficultyEnum,
   QuestionResponse,
   QuestionTypeEnum,
-} from '@/types/Trivia.types';
+} from '@/modules/quiz/types/Trivia.types';
 
 export default function useQuestionByCategoryApi(
   amount: number,
