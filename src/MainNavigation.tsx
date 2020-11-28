@@ -2,7 +2,7 @@ import React from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import HomeScreen from '@/modules/home/HomeScreen';
+import ListOfCategoriesScreen from '@/modules/quiz/ListOfCategoriesScreen';
 import { AppScreensEnum } from '@/types/AppScreensEnum';
 import QuizByCategoryScreen from './modules/quiz/QuizByCategoryScreen/QuizByCategoryScreen';
 
@@ -15,14 +15,19 @@ export function AppNavigator(): JSX.Element {
         headerShown: false,
       }}>
       <Stack.Screen
-        testID="HomeNavigator"
-        name={AppScreensEnum.Home}
-        component={HomeScreen}
+        testID="ListOfCategoriesNavigator"
+        name={AppScreensEnum.ListOfCategories}
+        component={ListOfCategoriesScreen}
       />
       <Stack.Screen
-        testID="QuizByCategory"
+        testID="QuizByCategoryNavigator"
         name={AppScreensEnum.QuizByCategory}
         component={QuizByCategoryScreen}
+      />
+      <Stack.Screen
+        testID="ScoreByCategoryNavigator"
+        name={AppScreensEnum.ScoreByCategory}
+        component={ScoreByCategoryScreen}
       />
     </Stack.Navigator>
   );

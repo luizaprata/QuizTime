@@ -9,10 +9,13 @@ import useQuestionByCategoryApi from './useQuestionByCategoryApi';
 import { useRoute } from '@react-navigation/native';
 import { Text, View } from 'react-native';
 import MultipleQuestionsList from './MultipleQuestionsList/MultipleQuestionsList';
-import tryChangeDifficulty, { QuizStatus } from './try-change-difficulty-level';
+import quizStatus, { QuizStatus } from './quiz-status';
+import { useNavigation } from '@react-navigation/native';
+import { AppScreensEnum } from '@/types/AppScreensEnum';
 
 const MAX_AMOUNT_QUESTION = 1;
 const QUESTION_TYPE = QuestionTypeEnum.multiple;
+const MAX_ANSWERS = 10;
 
 type DifficultyScore = { hits: number; errors: number };
 type Score = {
@@ -23,15 +26,18 @@ type Score = {
 
 const QuizByCategoryScreen: React.FC = () => {
   const route = useRoute();
+  const navigation = useNavigation();
 
   const { category } = route.params as {
     category: Category;
   };
 
-  const [quizStatus, setQuizStatus] = useState<QuizStatus>({
+  const [currentQuizStatus, setCurrentQuizStatus] = useState<QuizStatus>({
     difficulty: DifficultyEnum.easy,
     straightPoints: 0,
+    totalAnswers: 0,
   });
+
   const [score, setScore] = useState<Score>({
     [DifficultyEnum.easy]: { hits: 0, errors: 0 },
     [DifficultyEnum.medium]: { hits: 0, errors: 0 },
@@ -47,17 +53,23 @@ const QuizByCategoryScreen: React.FC = () => {
     MAX_AMOUNT_QUESTION,
     QUESTION_TYPE,
     category.id,
-    quizStatus.difficulty,
+    currentQuizStatus.difficulty,
   );
 
   useEffect(() => {
-    fetchData();
+    if (currentQuizStatus.totalAnswers >= MAX_ANSWERS) {
+      navigation.navigate(AppScreensEnum.ScoreByCategory, {
+        score,
+      });
+    } else {
+      fetchData();
+    }
     return () => {};
-  }, [quizStatus, fetchData]);
+  }, [currentQuizStatus, fetchData, navigation, score]);
 
   const onHandleAnswer = (isCorrect: boolean) => {
-    setQuizStatus((prevQuiz) => {
-      const nextDiff = tryChangeDifficulty(prevQuiz, isCorrect);
+    setCurrentQuizStatus((prevQuiz) => {
+      const nextDiff = quizStatus(prevQuiz, isCorrect);
       setScore((prevScore) => {
         const nextScore = prevScore[nextDiff.difficulty];
         nextScore.hits += isCorrect ? 1 : 0;
@@ -90,7 +102,7 @@ const QuizByCategoryScreen: React.FC = () => {
               );
             })}
 
-            <Text>{JSON.stringify(quizStatus, null, ' ')}</Text>
+            <Text>{JSON.stringify(currentQuizStatus, null, ' ')}</Text>
             <Text>{JSON.stringify(score, null, ' ')}</Text>
           </>
         )}

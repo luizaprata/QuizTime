@@ -3,7 +3,7 @@ import { render, act, RenderAPI } from '@testing-library/react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import MainNavigation, { AppNavigator } from './MainNavigation';
 import { AppScreensEnum } from '@/types/AppScreensEnum';
-import HomeScreen from '@/modules/home/HomeScreen/HomeScreen';
+import ListOfCategoriesScreen from '@/modules/quiz/ListOfCategoriesScreen/ListOfCategoriesScreen';
 
 describe('MainNavigation', () => {
   let component: RenderAPI;
@@ -15,7 +15,7 @@ describe('MainNavigation', () => {
   });
 
   describe('AppNavigator', () => {
-    test('THEN it SHOULD have HomeScreen navigator', async () => {
+    test('THEN it SHOULD have ListOfCategoriesScreen navigator', async () => {
       component = render(
         <NavigationContainer>
           <AppNavigator />
@@ -28,7 +28,7 @@ describe('MainNavigation', () => {
       const navigation = component.getByTestId('HomeNavigator');
 
       expect(navigation.props.name).toBe(AppScreensEnum.Home);
-      expect(navigation.props.component).toEqual(HomeScreen);
+      expect(navigation.props.component).toEqual(ListOfCategoriesScreen);
     });
   });
 });
