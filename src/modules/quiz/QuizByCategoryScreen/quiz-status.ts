@@ -30,13 +30,21 @@ export default (quizStatus: QuizStatus, isCorrect: boolean): QuizStatus => {
   quizStatus.totalAnswers += 1;
 
   if (
+    (isCorrect && quizStatus.straightPoints < 0) ||
+    (!isCorrect && quizStatus.straightPoints > 0)
+  ) {
+    quizStatus.straightPoints = 0;
+  } else {
+    quizStatus.straightPoints += isCorrect ? 1 : -1;
+  }
+
+  if (
     quizStatus.straightPoints !== 0 &&
     quizStatus.straightPoints % MAX_STRAIGHT === 0
   ) {
     return getDifficulty(quizStatus, isCorrect);
   }
 
-  quizStatus.straightPoints += 1;
   return {
     ...quizStatus,
     difficulty: quizStatus.difficulty,

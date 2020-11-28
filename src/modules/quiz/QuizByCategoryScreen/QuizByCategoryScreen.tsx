@@ -1,28 +1,22 @@
+import React, { useEffect, useState } from 'react';
+import { Text, View } from 'react-native';
 import { ScreenArea, ScrollArea } from '@/components/Screen/Screen.styles';
 import {
   Category,
   DifficultyEnum,
   QuestionTypeEnum,
 } from '@/modules/quiz/types/Trivia.types';
-import React, { useEffect, useState } from 'react';
 import useQuestionByCategoryApi from './useQuestionByCategoryApi';
 import { useRoute } from '@react-navigation/native';
-import { Text, View } from 'react-native';
 import MultipleQuestionsList from './MultipleQuestionsList/MultipleQuestionsList';
 import quizStatus, { QuizStatus } from './quiz-status';
 import { useNavigation } from '@react-navigation/native';
 import { AppScreensEnum } from '@/types/AppScreensEnum';
+import { Score } from '@/modules/quiz/types/Quiz.types';
 
 const MAX_AMOUNT_QUESTION = 1;
 const QUESTION_TYPE = QuestionTypeEnum.multiple;
 const MAX_ANSWERS = 10;
-
-type DifficultyScore = { hits: number; errors: number };
-type Score = {
-  [DifficultyEnum.easy]: DifficultyScore;
-  [DifficultyEnum.medium]: DifficultyScore;
-  [DifficultyEnum.hard]: DifficultyScore;
-};
 
 const QuizByCategoryScreen: React.FC = () => {
   const route = useRoute();
@@ -60,12 +54,13 @@ const QuizByCategoryScreen: React.FC = () => {
     if (currentQuizStatus.totalAnswers >= MAX_ANSWERS) {
       navigation.navigate(AppScreensEnum.ScoreByCategory, {
         score,
+        category,
       });
     } else {
       fetchData();
     }
     return () => {};
-  }, [currentQuizStatus, fetchData, navigation, score]);
+  }, [currentQuizStatus, fetchData, navigation, score, category]);
 
   const onHandleAnswer = (isCorrect: boolean) => {
     setCurrentQuizStatus((prevQuiz) => {
