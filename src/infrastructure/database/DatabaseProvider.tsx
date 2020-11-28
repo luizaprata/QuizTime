@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, useState } from 'react';
-import RealmContext, { IRealmContext } from './RealmContext';
+import RealmContext, { IRealmContext } from './DatabaseContext';
 
 export interface IRealmProviderProps extends PropsWithChildren<{}> {
   initialRealm?: Realm;
