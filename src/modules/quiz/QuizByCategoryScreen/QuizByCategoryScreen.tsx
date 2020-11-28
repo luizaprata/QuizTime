@@ -16,9 +16,9 @@ const QUESTION_TYPE = QuestionTypeEnum.multiple;
 
 type DifficultyScore = { hits: number; errors: number };
 type Score = {
-  easy: DifficultyScore;
-  medium: DifficultyScore;
-  hard: DifficultyScore;
+  [DifficultyEnum.easy]: DifficultyScore;
+  [DifficultyEnum.medium]: DifficultyScore;
+  [DifficultyEnum.hard]: DifficultyScore;
 };
 
 const QuizByCategoryScreen: React.FC = () => {
@@ -33,9 +33,9 @@ const QuizByCategoryScreen: React.FC = () => {
     straightPoints: 0,
   });
   const [score, setScore] = useState<Score>({
-    easy: { hits: 0, errors: 0 },
-    medium: { hits: 0, errors: 0 },
-    hard: { hits: 0, errors: 0 },
+    [DifficultyEnum.easy]: { hits: 0, errors: 0 },
+    [DifficultyEnum.medium]: { hits: 0, errors: 0 },
+    [DifficultyEnum.hard]: { hits: 0, errors: 0 },
   });
 
   const {
