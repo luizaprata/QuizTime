@@ -1,4 +1,4 @@
-import React from 'react';
+import { createContext } from 'react';
 import Realm from 'realm';
 
 export interface IRealmContext {
@@ -6,7 +6,7 @@ export interface IRealmContext {
   setRealm: (realm: Realm | undefined) => void;
 }
 
-export const RealmContext = React.createContext<IRealmContext>({
+export default createContext<IRealmContext>({
   realm: undefined,
   setRealm: () => {},
 });

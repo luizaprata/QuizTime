@@ -1,13 +1,26 @@
-const SCORE_SCHEMA = 'SCORE_SCHEMA';
+import { ObjectSchema } from 'realm';
 
-const DifficultyScore = { hits: 'int', errors: 'int' };
-
-export const ScoreScheme = {
-  name: SCORE_SCHEMA,
+export const WorkspaceSchema: ObjectSchema = {
+  name: 'Workspace',
   primaryKey: 'id',
   properties: {
-    easy: DifficultyScore,
-    medium: DifficultyScore,
-    hard: DifficultyScore,
+    id: 'string',
+    scores: {
+      type: 'linkingObjects',
+      objectType: 'Score',
+      property: 'workspace',
+    },
+  },
+};
+
+export const ScoreSchema: ObjectSchema = {
+  name: 'Score',
+  primaryKey: 'id',
+  properties: {
+    id: 'string',
+    name: 'string',
+    hits: 'int',
+    errors: 'int',
+    workspace: 'Workspace',
   },
 };

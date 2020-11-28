@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { RealmContext } from '../infrastructure/realm/RealmContext';
+import { RealmContext } from '../infrastructure/database/RealmContext';
 
 export interface IUseRealmQueryParams<T> {
   source: string | Realm.Results<T>;
