@@ -9,7 +9,7 @@ import {
 import useQuestionByCategoryApi from './useQuestionByCategoryApi';
 import { useRoute } from '@react-navigation/native';
 import MultipleQuestionsList from './MultipleQuestionsList/MultipleQuestionsList';
-import quizStatus, { QuizStatus } from './quiz-status';
+import changeQuizStatus, { QuizStatus } from './quiz-status';
 import { useNavigation } from '@react-navigation/native';
 import { AppScreensEnum } from '@/types/AppScreensEnum';
 import { Score } from '@/modules/quiz/types/Quiz.types';
@@ -63,15 +63,15 @@ const QuizByCategoryScreen: React.FC = () => {
   }, [currentQuizStatus, fetchData, navigation, score, category]);
 
   const onHandleAnswer = (isCorrect: boolean) => {
-    setCurrentQuizStatus((prevQuiz) => {
-      const nextDiff = quizStatus(prevQuiz, isCorrect);
+    setCurrentQuizStatus((prevQuizStatus) => {
+      const nextQuizStatus = changeQuizStatus(prevQuizStatus, isCorrect);
       setScore((prevScore) => {
-        const nextScore = prevScore[prevQuiz.difficulty];
+        const nextScore = prevScore[prevQuizStatus.difficulty];
         nextScore.hits += isCorrect ? 1 : 0;
         nextScore.errors += isCorrect ? 0 : 1;
         return prevScore;
       });
-      return nextDiff;
+      return nextQuizStatus;
     });
   };
 

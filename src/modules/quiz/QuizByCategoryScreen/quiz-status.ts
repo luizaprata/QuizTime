@@ -29,11 +29,11 @@ const getDifficulty = (
 export default (quizStatus: QuizStatus, isCorrect: boolean): QuizStatus => {
   quizStatus.totalAnswers += 1;
 
-  const changedTendency =
+  const changedTrend =
     (isCorrect && quizStatus.straightPoints < 0) ||
     (!isCorrect && quizStatus.straightPoints > 0);
 
-  if (changedTendency) {
+  if (changedTrend) {
     quizStatus.straightPoints = 0;
   } else {
     quizStatus.straightPoints += isCorrect ? 1 : -1;
