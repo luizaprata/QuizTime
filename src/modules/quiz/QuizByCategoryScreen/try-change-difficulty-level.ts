@@ -1,8 +1,8 @@
 import { DifficultyEnum } from '@/types/Trivia.types';
 
-export type Difficulty = {
-  current: DifficultyEnum;
-  hitsCount: number;
+export type QuizStatus = {
+  difficulty: DifficultyEnum;
+  straightPoints: number;
 };
 export const DIFFICULTY_ORDER = [
   DifficultyEnum.easy,
@@ -10,31 +10,32 @@ export const DIFFICULTY_ORDER = [
   DifficultyEnum.hard,
 ];
 
+const MAX_STRAIGHT = 2;
+
 const getDifficulty = (
-  difficulty: Difficulty,
-  newHits: number,
-  tryPosition: number,
-): Difficulty => {
-  const idx = DIFFICULTY_ORDER.indexOf(difficulty.current);
-  const levelCandidate = DIFFICULTY_ORDER[idx + tryPosition];
-  return levelCandidate
-    ? { current: levelCandidate, hitsCount: newHits }
-    : { current: difficulty.current, hitsCount: newHits };
+  quizStatus: QuizStatus,
+  isCorrect: boolean,
+): QuizStatus => {
+  const idx = DIFFICULTY_ORDER.indexOf(quizStatus.difficulty);
+  const levelCandidate = DIFFICULTY_ORDER[idx + (isCorrect ? 1 : -1)];
+  return {
+    difficulty: levelCandidate ? levelCandidate : quizStatus.difficulty,
+    straightPoints: 0,
+  };
 };
 
-const tryChange = (difficulty: Difficulty, currentHits: number): Difficulty => {
-  const changeLevel =
-    currentHits !== difficulty.hitsCount && currentHits % 2 === 0;
-
-  if (changeLevel) {
-    return getDifficulty(
-      difficulty,
-      currentHits,
-      currentHits < difficulty.hitsCount ? -1 : 1,
-    );
+const tryChange = (quizStatus: QuizStatus, isCorrect: boolean): QuizStatus => {
+  if (
+    quizStatus.straightPoints !== 0 &&
+    quizStatus.straightPoints % MAX_STRAIGHT === 0
+  ) {
+    return getDifficulty(quizStatus, isCorrect);
   }
 
-  return difficulty;
+  return {
+    difficulty: quizStatus.difficulty,
+    straightPoints: quizStatus.straightPoints + 1,
+  };
 };
 
 export default tryChange;
