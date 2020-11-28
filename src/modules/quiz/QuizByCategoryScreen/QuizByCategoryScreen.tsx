@@ -66,7 +66,7 @@ const QuizByCategoryScreen: React.FC = () => {
     setCurrentQuizStatus((prevQuiz) => {
       const nextDiff = quizStatus(prevQuiz, isCorrect);
       setScore((prevScore) => {
-        const nextScore = prevScore[nextDiff.difficulty];
+        const nextScore = prevScore[prevQuiz.difficulty];
         nextScore.hits += isCorrect ? 1 : 0;
         nextScore.errors += isCorrect ? 0 : 1;
         return prevScore;
