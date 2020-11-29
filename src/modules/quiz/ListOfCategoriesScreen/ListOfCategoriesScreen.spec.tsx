@@ -4,7 +4,6 @@ import ListOfCategoriesScreen from '.';
 import { useNavigation } from '@react-navigation/native';
 import useAllCategoriesApi from './useAllCategoriesApi';
 import DatabaseContext from '@/infrastructure/database/DatabaseContext';
-import useRealmQuery from './useRealmQuery';
 
 jest.mock('@react-navigation/native', () => {
   const navigate = jest.fn();
@@ -14,6 +13,7 @@ jest.mock('@react-navigation/native', () => {
 
   return {
     useNavigation: useNavigationMock,
+    useIsFocused: jest.fn().mockReturnValue(true),
   };
 });
 

@@ -23,7 +23,6 @@ const ListOfCategoriesScreen: React.FC = () => {
   const { payload, isLoading, errorMessage } = useAllCategoriesApi();
 
   useEffect(() => {
-    console.log({ isFocused });
     if (!payload || !realm || !isFocused) {
       return () => {};
     }
