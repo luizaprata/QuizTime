@@ -1,5 +1,5 @@
 {
-  "name": "QuizTime",
+  "name": "quiztime",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -16,7 +16,10 @@
     }
   },
   "lint-staged": {
-    "**/*": "prettier ./src --write --ignore-unknown"
+    "**/*": [
+      "prettier ./src --write --ignore-unknown",
+      "eslint ./src"
+    ]
   },
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.10",

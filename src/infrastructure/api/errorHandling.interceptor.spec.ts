@@ -1,4 +1,3 @@
-import { ApiGatewayError } from './apiErrors/ApiGatewayError';
 import { ApiServerError } from './apiErrors/ApiServerError';
 import { ApiUnknowError } from './apiErrors/ApiUnknowError';
 import { ApiValidationError } from './apiErrors/ApiValidationError';

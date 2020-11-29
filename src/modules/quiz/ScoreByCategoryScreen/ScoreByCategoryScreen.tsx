@@ -1,14 +1,10 @@
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 import { Button, Text } from 'react-native';
 import { ScreenArea, ScrollArea } from '@/components/Screen/Screen.styles';
 import { useRoute } from '@react-navigation/native';
 import { useNavigation } from '@react-navigation/native';
-import { IWorkspace, Score } from '../types/Quiz.types';
+import { Score } from '../types/Quiz.types';
 import { AppScreensEnum } from '@/types/AppScreensEnum';
-import DatabaseContext from '@/infrastructure/database/DatabaseContext';
-import { ScoreSchema } from '../schema/Quiz.scheme';
-import cuid from 'cuid';
-import { DIFFICULTY_ORDER } from '../QuizByCategoryScreen/quiz-status';
 
 const ScoreByCategoryScreen: React.FC = () => {
   const route = useRoute();
