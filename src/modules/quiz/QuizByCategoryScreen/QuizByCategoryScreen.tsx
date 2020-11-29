@@ -56,7 +56,7 @@ const QuizByCategoryScreen: React.FC = () => {
   useEffect(() => {
     if (currentQuizStatus.totalAnswers >= MAX_ANSWERS) {
       if (!realm) {
-        return;
+        return () => {};
       }
       realm.write(() => {
         DIFFICULTY_ORDER.forEach((n) => {

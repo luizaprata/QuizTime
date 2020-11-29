@@ -14,6 +14,7 @@ export default function useAllCategoriesApi() {
 
   useEffect(() => {
     void fetchData();
+    return () => {};
   }, [fetchData]);
 
   return { payload, isLoading, errorMessage, clearErrorMessage };
