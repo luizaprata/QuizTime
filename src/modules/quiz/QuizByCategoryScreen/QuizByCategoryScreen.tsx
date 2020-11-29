@@ -15,6 +15,7 @@ import { IWorkspace, Score } from '@/modules/quiz/types/Quiz.types';
 import DatabaseContext from '@/infrastructure/database/DatabaseContext';
 import cuid from 'cuid';
 import { ScoreSchema } from '../schema/Quiz.scheme';
+import DifficultyStars from './DifficultyStars';
 
 const MAX_AMOUNT_QUESTION = 1;
 const QUESTION_TYPE = QuestionTypeEnum.multiple;
@@ -100,6 +101,7 @@ const QuizByCategoryScreen: React.FC = () => {
   return (
     <ScreenArea>
       <ScrollArea>
+        <DifficultyStars currentDifficulty={currentQuizStatus.difficulty} />
         {isLoading && <Text>Carregando</Text>}
         {!isLoading &&
           payload?.results.map((quest, idx) => (

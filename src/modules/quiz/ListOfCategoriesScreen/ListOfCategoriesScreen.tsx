@@ -9,7 +9,6 @@ import useRealmQuery from './useRealmQuery';
 import { IWorkspace } from '../types/Quiz.types';
 import { WorkspaceSchema } from '../schema/Quiz.scheme';
 import DatabaseContext from '@/infrastructure/database/DatabaseContext';
-import Icon from 'react-native-vector-icons/AntDesign';
 
 const ListOfCategoriesScreen: React.FC = () => {
   const navigation = useNavigation();
@@ -51,8 +50,6 @@ const ListOfCategoriesScreen: React.FC = () => {
   return (
     <ScreenArea>
       <ScrollArea>
-        <Icon name="star" color="green" size={50} />
-
         {isLoading && <Text>Carregando</Text>}
         {!isLoading && (
           <ButtonContainer>

@@ -13,7 +13,7 @@ export default function useAllCategoriesApi() {
   } = useApi<CategoriesResponse>('get', URLS.TRIVIA.GET_ALL_CATEGORIES);
 
   useEffect(() => {
-    void fetchData();
+    fetchData();
     return () => {};
   }, [fetchData]);
 
