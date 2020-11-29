@@ -1,5 +1,5 @@
+import DatabaseContext from '@/infrastructure/database/DatabaseContext';
 import { useMemo, useContext } from 'react';
-import DatabaseContext from '../infrastructure/database/DatabaseContext';
 
 export interface IUseRealmQueryParams<T> {
   source: string | Realm.Results<T>;
