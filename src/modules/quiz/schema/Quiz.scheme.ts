@@ -4,7 +4,8 @@ export const WorkspaceSchema: ObjectSchema = {
   name: 'Workspace',
   primaryKey: 'id',
   properties: {
-    id: 'string',
+    id: 'int',
+    name: 'string',
     scores: {
       type: 'linkingObjects',
       objectType: 'Score',
@@ -18,7 +19,7 @@ export const ScoreSchema: ObjectSchema = {
   primaryKey: 'id',
   properties: {
     id: 'string',
-    name: 'string',
+    difficulty: 'string',
     hits: 'int',
     errors: 'int',
     workspace: 'Workspace',

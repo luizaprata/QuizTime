@@ -7,3 +7,17 @@ export type Score = {
   [DifficultyEnum.medium]: DifficultyScore;
   [DifficultyEnum.hard]: DifficultyScore;
 };
+
+export interface IWorkspace {
+  id: number;
+  name: string;
+  scores: Realm.Results<IScore>;
+}
+
+export interface IScore {
+  id: string;
+  difficulty: string;
+  hits: number;
+  errors: number;
+  workspace: IWorkspace;
+}
