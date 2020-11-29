@@ -101,23 +101,17 @@ const QuizByCategoryScreen: React.FC = () => {
     <ScreenArea>
       <ScrollArea>
         {isLoading && <Text>Carregando</Text>}
-        {!isLoading && (
-          <>
-            {payload?.results.map((quest, idx) => (
-              <View key={idx}>
-                <Text>{quest.question}</Text>
-                <MultipleQuestionsList
-                  incorrectAnswers={quest.incorrect_answers}
-                  correctAnswer={quest.correct_answer}
-                  onHandleAnswer={onHandleAnswer}
-                />
-              </View>
-            ))}
-
-            <Text>{JSON.stringify(currentQuizStatus, null, ' ')}</Text>
-            <Text>{JSON.stringify(score, null, ' ')}</Text>
-          </>
-        )}
+        {!isLoading &&
+          payload?.results.map((quest, idx) => (
+            <View key={idx}>
+              <Text>{quest.question}</Text>
+              <MultipleQuestionsList
+                incorrectAnswers={quest.incorrect_answers}
+                correctAnswer={quest.correct_answer}
+                onHandleAnswer={onHandleAnswer}
+              />
+            </View>
+          ))}
       </ScrollArea>
     </ScreenArea>
   );
