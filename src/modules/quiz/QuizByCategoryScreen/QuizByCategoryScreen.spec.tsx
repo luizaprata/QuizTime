@@ -1,9 +1,7 @@
 import React from 'react';
 import { render, RenderAPI } from '@testing-library/react-native';
 import QuizByCategoryScreen from '.';
-import { useNavigation } from '@react-navigation/native';
 import useQuestionByCategoryApi from './useQuestionByCategoryApi';
-import { ScoreSchema } from '../schema/Quiz.scheme';
 import DatabaseContext from '@/infrastructure/database/DatabaseContext';
 import { useRoute } from '@react-navigation/native';
 

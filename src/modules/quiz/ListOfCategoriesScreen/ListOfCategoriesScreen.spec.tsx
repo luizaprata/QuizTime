@@ -3,6 +3,7 @@ import { render, RenderAPI } from '@testing-library/react-native';
 import ListOfCategoriesScreen from '.';
 import { useNavigation } from '@react-navigation/native';
 import useAllCategoriesApi from './useAllCategoriesApi';
+import DatabaseContext from '@/infrastructure/database/DatabaseContext';
 
 jest.mock('@react-navigation/native', () => {
   const navigate = jest.fn();
@@ -22,6 +23,11 @@ jest.mock('./useAllCategoriesApi', () => {
   mock.setResult = (_result) => (result = _result);
   return mock;
 });
+
+const realm = {
+  write: jest.fn(),
+  create: jest.fn(),
+};
 
 describe('ListOfCategoriesScreen', () => {
   let component: RenderAPI;
@@ -45,7 +51,11 @@ describe('ListOfCategoriesScreen', () => {
         isLoading: false,
         errorMessage: null,
       });
-      component = render(<ListOfCategoriesScreen />);
+      component = render(
+        <DatabaseContext.Provider value={{ realm }}>
+          <ListOfCategoriesScreen />
+        </DatabaseContext.Provider>,
+      );
 
       expect(component.getByText('category1')).toBeDefined();
       expect(component.getByText('category2')).toBeDefined();
@@ -57,7 +67,11 @@ describe('ListOfCategoriesScreen', () => {
         isLoading: false,
         errorMessage: 'Ocorreu um erro',
       });
-      component = render(<ListOfCategoriesScreen />);
+      component = render(
+        <DatabaseContext.Provider value={{ realm }}>
+          <ListOfCategoriesScreen />
+        </DatabaseContext.Provider>,
+      );
 
       expect(component.getByText('Ocorreu um erro')).toBeDefined();
     });
@@ -68,7 +82,11 @@ describe('ListOfCategoriesScreen', () => {
         isLoading: true,
         errorMessage: null,
       });
-      component = render(<ListOfCategoriesScreen />);
+      component = render(
+        <DatabaseContext.Provider value={{ realm }}>
+          <ListOfCategoriesScreen />
+        </DatabaseContext.Provider>,
+      );
 
       expect(component.getByText('Carregando')).toBeDefined();
     });
