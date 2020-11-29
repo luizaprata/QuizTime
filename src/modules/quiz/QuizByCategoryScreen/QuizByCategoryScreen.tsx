@@ -1,18 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
 import { ScreenArea, ScrollArea } from '@/components/Screen/Screen.styles';
 import {
-  Category,
   DifficultyEnum,
   QuestionTypeEnum,
 } from '@/modules/quiz/types/Trivia.types';
 import useQuestionByCategoryApi from './useQuestionByCategoryApi';
 import { useRoute } from '@react-navigation/native';
 import MultipleQuestionsList from './MultipleQuestionsList/MultipleQuestionsList';
-import changeQuizStatus, { QuizStatus } from './quiz-status';
+import changeQuizStatus, { DIFFICULTY_ORDER, QuizStatus } from './quiz-status';
 import { useNavigation } from '@react-navigation/native';
 import { AppScreensEnum } from '@/types/AppScreensEnum';
-import { Score } from '@/modules/quiz/types/Quiz.types';
+import { IWorkspace, Score } from '@/modules/quiz/types/Quiz.types';
+import DatabaseContext from '@/infrastructure/database/DatabaseContext';
+import cuid from 'cuid';
+import { ScoreSchema } from '../schema/Quiz.scheme';
 
 const MAX_AMOUNT_QUESTION = 1;
 const QUESTION_TYPE = QuestionTypeEnum.multiple;
@@ -21,9 +23,10 @@ const MAX_ANSWERS = 10;
 const QuizByCategoryScreen: React.FC = () => {
   const route = useRoute();
   const navigation = useNavigation();
+  const { realm } = useContext(DatabaseContext);
 
-  const { category } = route.params as {
-    category: Category;
+  const { workspace } = route.params as {
+    workspace: IWorkspace;
   };
 
   const [currentQuizStatus, setCurrentQuizStatus] = useState<QuizStatus>({
@@ -46,21 +49,37 @@ const QuizByCategoryScreen: React.FC = () => {
   } = useQuestionByCategoryApi(
     MAX_AMOUNT_QUESTION,
     QUESTION_TYPE,
-    category.id,
+    workspace.id,
     currentQuizStatus.difficulty,
   );
 
   useEffect(() => {
     if (currentQuizStatus.totalAnswers >= MAX_ANSWERS) {
+      if (!realm) {
+        return () => {};
+      }
+      realm.write(() => {
+        DIFFICULTY_ORDER.forEach((n) => {
+          const dataScore = {
+            id: cuid(),
+            difficulty: n,
+            hits: score[n].hits,
+            errors: score[n].errors,
+            workspace,
+          };
+
+          realm.create(ScoreSchema.name, dataScore);
+        });
+      });
+
       navigation.navigate(AppScreensEnum.ScoreByCategory, {
         score,
-        category,
       });
     } else {
       fetchData();
     }
     return () => {};
-  }, [currentQuizStatus, fetchData, navigation, score, category]);
+  }, [currentQuizStatus, fetchData, navigation, score, realm, workspace]);
 
   const onHandleAnswer = (isCorrect: boolean) => {
     setCurrentQuizStatus((prevQuizStatus) => {
@@ -82,25 +101,17 @@ const QuizByCategoryScreen: React.FC = () => {
     <ScreenArea>
       <ScrollArea>
         {isLoading && <Text>Carregando</Text>}
-        {!isLoading && (
-          <>
-            {payload?.results.map((quest, idx) => {
-              return (
-                <View key={idx}>
-                  <Text>{quest.question}</Text>
-                  <MultipleQuestionsList
-                    incorrectAnswers={quest.incorrect_answers}
-                    correctAnswer={quest.correct_answer}
-                    onHandleAnswer={onHandleAnswer}
-                  />
-                </View>
-              );
-            })}
-
-            <Text>{JSON.stringify(currentQuizStatus, null, ' ')}</Text>
-            <Text>{JSON.stringify(score, null, ' ')}</Text>
-          </>
-        )}
+        {!isLoading &&
+          payload?.results.map((quest, idx) => (
+            <View key={idx}>
+              <Text>{quest.question}</Text>
+              <MultipleQuestionsList
+                incorrectAnswers={quest.incorrect_answers}
+                correctAnswer={quest.correct_answer}
+                onHandleAnswer={onHandleAnswer}
+              />
+            </View>
+          ))}
       </ScrollArea>
     </ScreenArea>
   );
