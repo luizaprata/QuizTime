@@ -5,10 +5,6 @@ import useQuestionByCategoryApi from './useQuestionByCategoryApi';
 import DatabaseContext from '@/infrastructure/database/DatabaseContext';
 import { useRoute } from '@react-navigation/native';
 
-jest.mock('../schema/Quiz.scheme', () => {
-  return { ScoreSchema: jest.fn() };
-});
-
 jest.mock('@react-navigation/native', () => {
   const navigate = jest.fn();
   const useNavigationMock = () => ({

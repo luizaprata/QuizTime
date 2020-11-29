@@ -1,27 +1,30 @@
 import React, { useEffect, useContext } from 'react';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useIsFocused } from '@react-navigation/native';
 import { ButtonContainer } from './ListOfCategoriesScreen.styles';
 import useAllCategoriesApi from './useAllCategoriesApi';
 import { Button, Text } from 'react-native';
 import { ScreenArea, ScrollArea } from '@/components/Screen/Screen.styles';
 import { AppScreensEnum } from '@/types/AppScreensEnum';
-import useRealmQuery from '@/hooks/useRealmQuery';
+import useRealmQuery from '@/modules/quiz/ListOfCategoriesScreen/useRealmQuery';
 import { IWorkspace } from '../types/Quiz.types';
 import { WorkspaceSchema } from '../schema/Quiz.scheme';
 import DatabaseContext from '@/infrastructure/database/DatabaseContext';
 
 const ListOfCategoriesScreen: React.FC = () => {
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
 
   const workspaces = useRealmQuery<IWorkspace>({
     source: WorkspaceSchema.name,
+    isFocused,
   });
   const { realm } = useContext(DatabaseContext);
 
   const { payload, isLoading, errorMessage } = useAllCategoriesApi();
 
   useEffect(() => {
-    if (!payload || !realm) {
+    console.log({ isFocused });
+    if (!payload || !realm || !isFocused) {
       return () => {};
     }
     payload.trivia_categories.forEach((item) => {
@@ -34,7 +37,7 @@ const ListOfCategoriesScreen: React.FC = () => {
     });
 
     return () => {};
-  }, [payload, realm, workspaces]);
+  }, [payload, realm, workspaces, isFocused]);
 
   const onCategorySelected = (workspace: IWorkspace) => {
     navigation.navigate(AppScreensEnum.QuizByCategory, {
