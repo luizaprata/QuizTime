@@ -5,7 +5,7 @@ import useAllCategoriesApi from './useAllCategoriesApi';
 import { Button, Text } from 'react-native';
 import { ScreenArea, ScrollArea } from '@/components/Screen/Screen.styles';
 import { AppScreensEnum } from '@/types/AppScreensEnum';
-import useRealmQuery from '@/modules/quiz/ListOfCategoriesScreen/useRealmQuery';
+import useRealmQuery from './useRealmQuery';
 import { IWorkspace } from '../types/Quiz.types';
 import { WorkspaceSchema } from '../schema/Quiz.scheme';
 import DatabaseContext from '@/infrastructure/database/DatabaseContext';

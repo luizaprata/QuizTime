@@ -4,6 +4,7 @@ import ListOfCategoriesScreen from '.';
 import { useNavigation } from '@react-navigation/native';
 import useAllCategoriesApi from './useAllCategoriesApi';
 import DatabaseContext from '@/infrastructure/database/DatabaseContext';
+import useRealmQuery from './useRealmQuery';
 
 jest.mock('@react-navigation/native', () => {
   const navigate = jest.fn();
@@ -16,7 +17,7 @@ jest.mock('@react-navigation/native', () => {
   };
 });
 
-jest.mock('@/hooks/useRealmQuery', () => {
+jest.mock('./useRealmQuery', () => {
   return jest.fn().mockReturnValue([
     { id: '123', name: 'category1', scores: [] },
     { id: '321', name: 'category2', scores: [] },
