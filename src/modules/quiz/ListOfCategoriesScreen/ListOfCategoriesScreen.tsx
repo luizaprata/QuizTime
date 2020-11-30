@@ -5,7 +5,7 @@ import useAllCategoriesApi from './useAllCategoriesApi';
 import { Button, Text } from 'react-native';
 import { ScreenArea, ScrollArea } from '@/components/Screen/Screen.styles';
 import { AppScreensEnum } from '@/types/AppScreensEnum';
-import useRealmQuery from './useRealmQuery';
+import useRealmQuery from '@/hooks/useRealmQuery';
 import { IWorkspace } from '../types/Quiz.types';
 import { WorkspaceSchema } from '../schema/Quiz.scheme';
 import DatabaseContext from '@/infrastructure/database/DatabaseContext';
@@ -38,9 +38,9 @@ const ListOfCategoriesScreen: React.FC = () => {
     return () => {};
   }, [payload, realm, workspaces, isFocused]);
 
-  const onCategorySelected = (workspace: IWorkspace) => {
+  const onCategorySelected = (scoreId: number) => {
     navigation.navigate(AppScreensEnum.QuizByCategory, {
-      workspace,
+      scoreId,
     });
   };
 
@@ -58,7 +58,7 @@ const ListOfCategoriesScreen: React.FC = () => {
                 key={workspace.id}
                 title={workspace.name}
                 disabled={workspace.scores.length > 0}
-                onPress={() => onCategorySelected(workspace)}
+                onPress={() => onCategorySelected(workspace.id)}
               />
             ))}
           </ButtonContainer>

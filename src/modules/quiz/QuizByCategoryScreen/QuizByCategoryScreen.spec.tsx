@@ -26,6 +26,13 @@ jest.mock('./useQuestionByCategoryApi', () => {
   return mock;
 });
 
+jest.mock('@/hooks/useRealmQuery', () => {
+  return jest.fn().mockReturnValue([
+    { id: 12, name: 'category1', scores: [] },
+    { id: 13, name: 'category2', scores: [] },
+  ]);
+});
+
 jest.mock('@react-navigation/native', () => {
   return {
     useRoute: jest.fn(),
