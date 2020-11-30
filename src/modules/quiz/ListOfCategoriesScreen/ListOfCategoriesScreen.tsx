@@ -38,9 +38,9 @@ const ListOfCategoriesScreen: React.FC = () => {
     return () => {};
   }, [payload, realm, workspaces, isFocused]);
 
-  const onCategorySelected = (workspace: IWorkspace) => {
+  const onCategorySelected = (scoreId: number) => {
     navigation.navigate(AppScreensEnum.QuizByCategory, {
-      workspace,
+      scoreId,
     });
   };
 
@@ -58,7 +58,7 @@ const ListOfCategoriesScreen: React.FC = () => {
                 key={workspace.id}
                 title={workspace.name}
                 disabled={workspace.scores.length > 0}
-                onPress={() => onCategorySelected(workspace)}
+                onPress={() => onCategorySelected(workspace.id)}
               />
             ))}
           </ButtonContainer>

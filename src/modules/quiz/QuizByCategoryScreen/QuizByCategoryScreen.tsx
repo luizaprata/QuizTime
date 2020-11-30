@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 import { Text, View } from 'react-native';
 import { ScreenArea, ScrollArea } from '@/components/Screen/Screen.styles';
 import {
@@ -11,11 +11,12 @@ import MultipleQuestionsList from './MultipleQuestionsList/MultipleQuestionsList
 import changeQuizStatus, { DIFFICULTY_ORDER, QuizStatus } from './quiz-status';
 import { useNavigation } from '@react-navigation/native';
 import { AppScreensEnum } from '@/types/AppScreensEnum';
-import { DifficultyScore, IWorkspace } from '@/modules/quiz/types/Quiz.types';
+import { DifficultyScore, IScore } from '@/modules/quiz/types/Quiz.types';
 import DatabaseContext from '@/infrastructure/database/DatabaseContext';
 import cuid from 'cuid';
-import { ScoreSchema } from '../schema/Quiz.scheme';
+import { ScoreSchema, WorkspaceSchema } from '../schema/Quiz.scheme';
 import DifficultyStars from './DifficultyStars';
+import useRealmQuery from '@/hooks/useRealmQuery';
 
 const MAX_AMOUNT_QUESTION = 1;
 const QUESTION_TYPE = QuestionTypeEnum.multiple;
@@ -26,9 +27,19 @@ const QuizByCategoryScreen: React.FC = () => {
   const navigation = useNavigation();
   const { realm } = useContext(DatabaseContext);
 
-  const { workspace } = route.params as {
-    workspace: IWorkspace;
+  const { scoreId } = route.params as {
+    scoreId: number;
   };
+
+  const workspaces = useRealmQuery<IScore>({
+    source: WorkspaceSchema.name,
+    filter: `id = ${scoreId}`,
+    isFocused: true,
+  });
+
+  const workspace = useMemo(() => (workspaces ? workspaces[0] : undefined), [
+    workspaces,
+  ]);
 
   const [currentQuizStatus, setCurrentQuizStatus] = useState<QuizStatus>({
     difficulty: DifficultyEnum.easy,
@@ -50,8 +61,8 @@ const QuizByCategoryScreen: React.FC = () => {
   } = useQuestionByCategoryApi(
     MAX_AMOUNT_QUESTION,
     QUESTION_TYPE,
-    workspace.id,
     currentQuizStatus.difficulty,
+    workspace,
   );
 
   useEffect(() => {
@@ -66,7 +77,7 @@ const QuizByCategoryScreen: React.FC = () => {
             difficulty: n,
             hits: score[n].hits,
             errors: score[n].errors,
-            workspace,
+            workspace: workspace,
           };
 
           realm.create(ScoreSchema.name, dataScore);

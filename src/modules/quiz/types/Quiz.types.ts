@@ -7,7 +7,7 @@ export interface IWorkspace {
 }
 
 export interface IScore {
-  id: string;
+  id: number;
   difficulty: string;
   hits: number;
   errors: number;

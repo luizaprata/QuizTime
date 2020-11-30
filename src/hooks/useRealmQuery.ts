@@ -20,7 +20,7 @@ export default function useRealmQuery<T>({
     }
     let queryObj =
       typeof source === 'string' ? realm.objects<T>(source) : source;
-    if (filter) {
+    if (filter && queryObj) {
       queryObj = queryObj.filtered(filter);
     }
     return queryObj;
