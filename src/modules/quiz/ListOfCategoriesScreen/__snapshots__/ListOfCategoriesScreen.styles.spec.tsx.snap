@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ListOfCategoriesScreen.styles THEN Container SHOULD match with snapshot 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "backgroundColor": "#F4F4F4",
+        "paddingBottom": 50,
+        "paddingLeft": 50,
+        "paddingRight": 50,
+        "paddingTop": 50,
+      },
+    ]
+  }
+/>
+`;

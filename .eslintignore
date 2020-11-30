@@ -1,0 +1,8 @@
+**/*.json
+**/*.spec.ts
+**/*.spec.tsx
+**/*.ttf
+**/*.lock
+**/*.md
+/ios
+/android
