@@ -17,6 +17,7 @@ import cuid from 'cuid';
 import { ScoreSchema, WorkspaceSchema } from '../schema/Quiz.scheme';
 import DifficultyStars from './DifficultyStars';
 import useRealmQuery from '@/hooks/useRealmQuery';
+import { XmlEntities } from 'html-entities';
 
 export const MAX_AMOUNT_QUESTION = 1;
 export const QUESTION_TYPE = QuestionTypeEnum.multiple;
@@ -65,6 +66,8 @@ const QuizByCategoryScreen: React.FC = () => {
     workspace,
   );
 
+  const entities = useMemo(() => new XmlEntities(), []);
+
   useEffect(() => {
     if (currentQuizStatus.totalAnswers >= MAX_ANSWERS) {
       if (!realm) {
@@ -110,6 +113,7 @@ const QuizByCategoryScreen: React.FC = () => {
   if (errorMessage) {
     return <Text>{errorMessage}</Text>;
   }
+
   return (
     <ScreenArea>
       <ScrollArea>
@@ -118,7 +122,7 @@ const QuizByCategoryScreen: React.FC = () => {
         {!isLoading &&
           payload?.results.map((quest, idx) => (
             <View key={idx}>
-              <Text testID="Question">{quest.question}</Text>
+              <Text testID="Question">{entities.decode(quest.question)}</Text>
               <MultipleAnswersList
                 incorrectAnswers={quest.incorrect_answers}
                 correctAnswer={quest.correct_answer}

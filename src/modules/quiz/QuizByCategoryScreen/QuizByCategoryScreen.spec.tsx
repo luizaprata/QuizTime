@@ -207,7 +207,7 @@ describe('QuizByCategoryScreen', () => {
       });
     });
 
-    test.only('WHEN student aswered 10 question SHOULD save score to local storage', async () => {
+    test('WHEN student aswered 10 question SHOULD save score to local storage', async () => {
       component = render(
         <DatabaseContext.Provider value={{ realm }}>
           <QuizByCategoryScreen />
