@@ -25,10 +25,14 @@ const ScoreDisplay: React.FC<Props> = ({ score }: Props) => {
       <ScoresContainer>
         {DIFFICULTY_ORDER.map((item) => {
           return (
-            <ScoreContainer>
+            <ScoreContainer key={item} testID={`Score ${item}`}>
               <ScoreText>{difficultyName[item]}</ScoreText>
-              <ScoreText>Acertos:{score[item].hits}</ScoreText>
-              <ScoreText>Erros:{score[item].errors}</ScoreText>
+              <ScoreText testID={`Score hit ${item}`}>
+                Acertos:{score[item].hits}
+              </ScoreText>
+              <ScoreText testID={`Score error ${item}`}>
+                Erros:{score[item].errors}
+              </ScoreText>
             </ScoreContainer>
           );
         })}
