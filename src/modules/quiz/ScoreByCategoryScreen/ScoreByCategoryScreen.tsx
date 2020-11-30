@@ -1,22 +1,26 @@
 import React from 'react';
-import { Button, Text } from 'react-native';
+import { Button } from 'react-native';
 import { ScreenArea, ScrollArea } from '@/components/Screen/Screen.styles';
 import { useRoute } from '@react-navigation/native';
 import { useNavigation } from '@react-navigation/native';
-import { Score } from '../types/Quiz.types';
 import { AppScreensEnum } from '@/types/AppScreensEnum';
+import { DifficultyEnum } from '../types/Trivia.types';
+import { DifficultyScore } from '../types/Quiz.types';
+import ScoreDisplay from './ScoreDisplay';
+import TotalHitsErrosDisplay from './TotalHitsErrosDisplay';
 
 const ScoreByCategoryScreen: React.FC = () => {
   const route = useRoute();
   const navigation = useNavigation();
   const { score } = route.params as {
-    score: Score;
+    score: Record<DifficultyEnum, DifficultyScore>;
   };
 
   return (
     <ScreenArea>
       <ScrollArea>
-        <Text>{JSON.stringify(score, null, ' ')}</Text>
+        <TotalHitsErrosDisplay score={score} />
+        <ScoreDisplay score={score} />
         <Button
           title="VOLTAR AO INÍCIO"
           onPress={() => {

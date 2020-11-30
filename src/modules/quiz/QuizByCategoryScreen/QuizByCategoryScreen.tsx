@@ -20,7 +20,7 @@ import useRealmQuery from '@/hooks/useRealmQuery';
 
 const MAX_AMOUNT_QUESTION = 1;
 const QUESTION_TYPE = QuestionTypeEnum.multiple;
-const MAX_ANSWERS = 10;
+const MAX_ANSWERS = 1;
 
 const QuizByCategoryScreen: React.FC = () => {
   const route = useRoute();

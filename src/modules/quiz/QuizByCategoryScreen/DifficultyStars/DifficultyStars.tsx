@@ -5,15 +5,10 @@ import { DifficultyEnum } from '../../types/Trivia.types';
 import colors from '@/resources/colors';
 import { Container, IconContainer, TextStatus } from './DifficultyStars.styles';
 
-const getDifficultyName = (difficulty: DifficultyEnum) => {
-  switch (difficulty) {
-    case 'hard':
-      return 'Difícil';
-    case 'medium':
-      return 'Moderado';
-    default:
-      return 'Fácil';
-  }
+const difficultyName: Record<DifficultyEnum, string> = {
+  easy: 'Fácil',
+  medium: 'Moderado',
+  hard: 'Difícil',
 };
 
 type Props = {
@@ -42,7 +37,7 @@ const DifficultyStars: React.FC<Props> = ({ currentDifficulty }: Props) => {
           return icon;
         })}
       </IconContainer>
-      <TextStatus>{getDifficultyName(currentDifficulty)}</TextStatus>
+      <TextStatus>{difficultyName[currentDifficulty]}</TextStatus>
     </Container>
   );
 };
