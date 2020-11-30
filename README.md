@@ -1,6 +1,6 @@
-# Projeto Teste Técnico -- Dev-Mobile -- Luiza Prata Soldi Passos
+# QuizTime
 
-Aplicativo mobile para SAS
+Aplicativo mobile de quiz
 
 ## Setup
 
@@ -10,10 +10,7 @@ Aplicativo mobile para SAS
   - Android studio
   - Git
   - Node (> 10)
-  - React Native **a definir**
-  - Typescript
   - Prettier (plugin do VSCode recomendado)
   - ESLint (plugin do VSCode recomendado)
 
 Passo-a-passo para setup do ambiente [aqui](./docs/setup-ambiente-react-native.md)
-

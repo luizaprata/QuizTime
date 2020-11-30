@@ -3,5 +3,6 @@
 **/*.spec.tsx
 **/*.ttf
 **/*.lock
+**/*.md
 /ios
 /android
