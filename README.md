@@ -36,15 +36,15 @@ Inicializar o build e instalação no emulador
 yarn ios
 ```
 
-## Como rodar em Androdi
+## Como rodar em Android
 
-Necessário fazer download das dependencias do projeto react-native
+Necessário fazer download das dependências do projeto react-native
 
 ```sh
 yarn install
 ```
 
-Inicializar o build e instalação no emulador
+Inicializar o build e instalação no simulador
 
 ```sh
 yarn android
@@ -52,11 +52,13 @@ yarn android
 
 ## Como rodar os testes
 
-Necessário fazer download das dependencias do projeto react-native
+Necessário fazer download das dependências do projeto react-native
 
 ```sh
 yarn install
 ```
+
+Para rodar os testes:
 
 ```sh
 yarn test
