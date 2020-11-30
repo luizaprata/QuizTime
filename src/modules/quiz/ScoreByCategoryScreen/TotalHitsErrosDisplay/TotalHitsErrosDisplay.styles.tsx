@@ -7,7 +7,7 @@ export const Container = styled.View`
 
 export const ScoresContainer = styled.View`
   flex-direction: row;
-  border-radius: 10;
+  border-radius: 10px;
   background-color: ${colors.chumbo400};
 `;
 

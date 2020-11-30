@@ -1,12 +1,41 @@
-import colors from '@/resources/colors';
-import styled from 'styled-components/native';
+import React from 'react';
+import { render, RenderAPI } from '@testing-library/react-native';
+import TotalHitsErrosDisplay from '.';
 
-export const Container = styled.View`
-  align-self: center;
-`;
+describe('TotalHitsErrosDisplay', () => {
+  let component: RenderAPI;
 
-export const ScoreContainer = styled.View`
-  flex-direction: row;
-  border-radius: 10;
-  background-color: ${colors.chumbo400};
-`;
+  describe('Rendering', () => {
+    test('SHOULD render total of 6 erros', () => {
+      component = render(
+        <TotalHitsErrosDisplay
+          score={{
+            easy: { hits: 1, errors: 3 },
+            medium: { hits: 4, errors: 2 },
+            hard: { hits: 0, errors: 1 },
+          }}
+        />,
+      );
+
+      const totalHits = component.getByTestId('TotalErros');
+
+      expect(totalHits.children[0]).toEqual('6');
+    });
+
+    test('SHOULD render total of 5 hits', () => {
+      component = render(
+        <TotalHitsErrosDisplay
+          score={{
+            easy: { hits: 1, errors: 3 },
+            medium: { hits: 4, errors: 2 },
+            hard: { hits: 0, errors: 1 },
+          }}
+        />,
+      );
+
+      const totalHits = component.getByTestId('TotalHits');
+
+      expect(totalHits.children[0]).toEqual('5');
+    });
+  });
+});

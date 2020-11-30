@@ -29,11 +29,11 @@ const TotalHitsErrosDisplay: React.FC<Props> = ({ score }: Props) => {
       <ScoresContainer>
         <ScoreContainer>
           <TextScore>acertos</TextScore>
-          <TextScore>{sumarizeHits(score)}</TextScore>
+          <TextScore testID="TotalHits">{sumarizeHits(score)}</TextScore>
         </ScoreContainer>
         <ScoreContainer>
           <TextScore>erros</TextScore>
-          <TextScore>{sumarizeErros(score)}</TextScore>
+          <TextScore testID="TotalErros">{sumarizeErros(score)}</TextScore>
         </ScoreContainer>
       </ScoresContainer>
     </Container>
