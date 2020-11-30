@@ -7,7 +7,7 @@ type Props = {
   onHandleAnswer: (isCorrect: boolean) => void;
 };
 
-const MultipleQuestionsList = ({
+const MultipleAnswersList = ({
   incorrectAnswers,
   correctAnswer,
   onHandleAnswer,
@@ -15,11 +15,20 @@ const MultipleQuestionsList = ({
   return (
     <View>
       {incorrectAnswers.map((asw, idx) => (
-        <Button title={asw} onPress={() => onHandleAnswer(false)} key={idx} />
+        <Button
+          testID="AnswersIncorrect"
+          title={asw}
+          onPress={() => onHandleAnswer(false)}
+          key={idx}
+        />
       ))}
-      <Button title={correctAnswer} onPress={() => onHandleAnswer(true)} />
+      <Button
+        testID="AnswersCorrect"
+        title={correctAnswer}
+        onPress={() => onHandleAnswer(true)}
+      />
     </View>
   );
 };
 
-export default MultipleQuestionsList;
+export default MultipleAnswersList;

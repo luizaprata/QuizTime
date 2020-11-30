@@ -7,7 +7,7 @@ import {
 } from '@/modules/quiz/types/Trivia.types';
 import useQuestionByCategoryApi from './useQuestionByCategoryApi';
 import { useRoute } from '@react-navigation/native';
-import MultipleQuestionsList from './MultipleQuestionsList/MultipleQuestionsList';
+import MultipleAnswersList from './MultipleAnswersList';
 import changeQuizStatus, { DIFFICULTY_ORDER, QuizStatus } from './quiz-status';
 import { useNavigation } from '@react-navigation/native';
 import { AppScreensEnum } from '@/types/AppScreensEnum';
@@ -18,9 +18,9 @@ import { ScoreSchema, WorkspaceSchema } from '../schema/Quiz.scheme';
 import DifficultyStars from './DifficultyStars';
 import useRealmQuery from '@/hooks/useRealmQuery';
 
-const MAX_AMOUNT_QUESTION = 1;
-const QUESTION_TYPE = QuestionTypeEnum.multiple;
-const MAX_ANSWERS = 1;
+export const MAX_AMOUNT_QUESTION = 1;
+export const QUESTION_TYPE = QuestionTypeEnum.multiple;
+export const MAX_ANSWERS = 10;
 
 const QuizByCategoryScreen: React.FC = () => {
   const route = useRoute();
@@ -117,8 +117,8 @@ const QuizByCategoryScreen: React.FC = () => {
         {!isLoading &&
           payload?.results.map((quest, idx) => (
             <View key={idx}>
-              <Text>{quest.question}</Text>
-              <MultipleQuestionsList
+              <Text testID="Question">{quest.question}</Text>
+              <MultipleAnswersList
                 incorrectAnswers={quest.incorrect_answers}
                 correctAnswer={quest.correct_answer}
                 onHandleAnswer={onHandleAnswer}
