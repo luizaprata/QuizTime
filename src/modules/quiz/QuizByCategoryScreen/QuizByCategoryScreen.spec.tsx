@@ -1,5 +1,10 @@
 import React from 'react';
-import { render, RenderAPI } from '@testing-library/react-native';
+import {
+  act,
+  fireEvent,
+  render,
+  RenderAPI,
+} from '@testing-library/react-native';
 import QuizByCategoryScreen from '.';
 import useQuestionByCategoryApi from './useQuestionByCategoryApi';
 import DatabaseContext from '@/infrastructure/database/DatabaseContext';
@@ -9,19 +14,23 @@ import {
   MAX_ANSWERS,
   QUESTION_TYPE,
 } from './QuizByCategoryScreen';
-import { QuestionTypeEnum } from '../types/Trivia.types';
+import { useNavigation } from '@react-navigation/native';
+import { AppScreensEnum } from '@/types/AppScreensEnum';
+import { ScoreSchema } from '../schema/Quiz.scheme';
 
 jest.mock('@react-navigation/native', () => {
-  const navigate = jest.fn();
-  const useNavigationMock = () => ({
-    navigate,
+  const useNavigationMock = jest.fn().mockReturnValue({
+    navigate: jest.fn(),
   });
-
   return {
     useRoute: jest.fn().mockReturnValue({ params: { category: { id: 1 } } }),
     useNavigation: useNavigationMock,
     setOptions: jest.fn(),
   };
+});
+
+jest.mock('cuid', () => {
+  return jest.fn().mockReturnValue('aaa');
 });
 
 jest.mock('./useQuestionByCategoryApi', () => {
@@ -39,30 +48,39 @@ jest.mock('@/hooks/useRealmQuery', () => {
   ]);
 });
 
-jest.mock('@react-navigation/native', () => {
-  return {
-    useRoute: jest.fn(),
-    useNavigation: jest.fn().mockReturnValue({
-      setOptions: jest.fn(),
-    }),
-  };
-});
-
 const useRouteMock = useRoute as jest.Mock;
 
 const realm = {
-  write: jest.fn(),
+  write: (fn) => fn(),
   create: jest.fn(),
+};
+
+const findAndHitMultipleTimes = async (
+  component: RenderAPI,
+  times: number,
+  buttonTestId: string,
+) => {
+  for (let i = 0; i < times; i++) {
+    const button = component.getByTestId(buttonTestId);
+
+    await act(async () => {
+      fireEvent.press(button);
+      await Promise.resolve();
+    });
+  }
 };
 
 describe('QuizByCategoryScreen', () => {
   let component: RenderAPI;
+  let navigation;
 
   beforeEach(() => {
     jest.useFakeTimers();
     useRouteMock.mockReturnValue({
       params: { workspace: { id: '123', name: 'name', scores: [] } },
     });
+
+    navigation = useNavigation();
   });
 
   describe('Config', () => {
@@ -159,6 +177,100 @@ describe('QuizByCategoryScreen', () => {
           'Which former US president was nicknamed after he refused to shoot a defenseless black bear?',
         ]);
       });
+    });
+  });
+
+  describe('Behavior', () => {
+    beforeAll(() => {
+      useQuestionByCategoryApi.setResult({
+        payload: {
+          response_code: 0,
+          results: [
+            {
+              category: 'Politics',
+              type: 'multiple',
+              difficulty: 'easy',
+              question:
+                'Which former US president was nicknamed after he refused to shoot a defenseless black bear?',
+              correct_answer: 'Theodore Roosevelt',
+              incorrect_answers: [
+                'Woodrow Wilson',
+                'James F. Fielder',
+                'Andrew Jackson',
+              ],
+            },
+          ],
+        },
+        isLoading: false,
+        errorMessage: null,
+        fetchData: jest.fn(),
+      });
+    });
+
+    test.only('WHEN student aswered 10 question SHOULD save score to local storage', async () => {
+      component = render(
+        <DatabaseContext.Provider value={{ realm }}>
+          <QuizByCategoryScreen />
+        </DatabaseContext.Provider>,
+      );
+
+      await findAndHitMultipleTimes(component, 10, 'AnswersCorrect');
+
+      expect(realm.create).toHaveBeenCalledTimes(3);
+      expect(realm.create).toHaveBeenCalledWith(ScoreSchema.name, {
+        difficulty: 'easy',
+        errors: 0,
+        hits: 2,
+        id: 'aaa',
+        workspace: {
+          id: 12,
+          name: 'category1',
+          scores: [],
+        },
+      });
+      expect(realm.create).toHaveBeenCalledWith(ScoreSchema.name, {
+        difficulty: 'medium',
+        errors: 0,
+        hits: 2,
+        id: 'aaa',
+        workspace: {
+          id: 12,
+          name: 'category1',
+          scores: [],
+        },
+      });
+      expect(realm.create).toHaveBeenCalledWith(ScoreSchema.name, {
+        difficulty: 'hard',
+        errors: 0,
+        hits: 6,
+        id: 'aaa',
+        workspace: {
+          id: 12,
+          name: 'category1',
+          scores: [],
+        },
+      });
+    });
+
+    test('WHEN student aswered 10 question SHOULD navigate to score screen', async () => {
+      component = render(
+        <DatabaseContext.Provider value={{ realm }}>
+          <QuizByCategoryScreen />
+        </DatabaseContext.Provider>,
+      );
+
+      await findAndHitMultipleTimes(component, 10, 'AnswersCorrect');
+
+      expect(navigation.navigate).toHaveBeenCalledWith(
+        AppScreensEnum.ScoreByCategory,
+        {
+          score: {
+            easy: { hits: 2, errors: 0 },
+            medium: { hits: 2, errors: 0 },
+            hard: { hits: 6, errors: 0 },
+          },
+        },
+      );
     });
   });
 });

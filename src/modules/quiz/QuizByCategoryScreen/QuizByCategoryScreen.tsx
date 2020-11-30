@@ -70,6 +70,7 @@ const QuizByCategoryScreen: React.FC = () => {
       if (!realm) {
         return () => {};
       }
+
       realm.write(() => {
         DIFFICULTY_ORDER.forEach((n) => {
           const dataScore = {
