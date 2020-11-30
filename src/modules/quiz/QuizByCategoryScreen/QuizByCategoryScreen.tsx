@@ -11,7 +11,7 @@ import MultipleQuestionsList from './MultipleQuestionsList/MultipleQuestionsList
 import changeQuizStatus, { DIFFICULTY_ORDER, QuizStatus } from './quiz-status';
 import { useNavigation } from '@react-navigation/native';
 import { AppScreensEnum } from '@/types/AppScreensEnum';
-import { IWorkspace, Score } from '@/modules/quiz/types/Quiz.types';
+import { DifficultyScore, IWorkspace } from '@/modules/quiz/types/Quiz.types';
 import DatabaseContext from '@/infrastructure/database/DatabaseContext';
 import cuid from 'cuid';
 import { ScoreSchema } from '../schema/Quiz.scheme';
@@ -36,10 +36,10 @@ const QuizByCategoryScreen: React.FC = () => {
     totalAnswers: 0,
   });
 
-  const [score, setScore] = useState<Score>({
-    [DifficultyEnum.easy]: { hits: 0, errors: 0 },
-    [DifficultyEnum.medium]: { hits: 0, errors: 0 },
-    [DifficultyEnum.hard]: { hits: 0, errors: 0 },
+  const [score, setScore] = useState<Record<DifficultyEnum, DifficultyScore>>({
+    easy: { hits: 0, errors: 0 },
+    medium: { hits: 0, errors: 0 },
+    hard: { hits: 0, errors: 0 },
   });
 
   const {
